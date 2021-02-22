@@ -1,0 +1,77 @@
+{
+  "_command": "Build with `packer build vagrant.json`",
+  "builders": [
+    {
+      "type": "parallels-pvm",
+      "parallels_tools_flavor": "lin",
+      "parallels_tools_mode": "disable",
+      "source_path": "/Users/peter/dev/box-parallels-pvm/Fedora Linux Base.pvm",
+      "shutdown_command": "{{ user `shutdown_command` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_timeout": "30s",
+      "prlctl": [
+        [
+          "set", "{{.Name}}", "--memsize", "{{ user `memory` }}"
+        ],
+        [
+          "set", "{{.Name}}", "--cpus", "{{ user `cpus` }}"
+        ]
+      ],
+      "prlctl_version_file": ".prlctl_version",
+      "vm_name": "{{ user `vm_name` }}"
+    }
+  ],
+  "post-processors": [
+    {
+      "keep_input_artifact": false,
+      "output": "box/{{.Provider}}/{{ user `vm_name` }}-{{ user `version` }}.box",
+      "type": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "environment_vars": [
+        "UPDATE={{user `update`}}",
+        "INSTALL_VAGRANT_KEY={{user `install_vagrant_key`}}",
+        "SSH_USERNAME={{user `ssh_username`}}",
+        "SSH_PASSWORD={{user `ssh_password`}}",
+        "http_proxy={{user `http_proxy`}}",
+        "https_proxy={{user `https_proxy`}}",
+        "ftp_proxy={{user `ftp_proxy`}}",
+        "rsync_proxy={{user `rsync_proxy`}}",
+        "no_proxy={{user `no_proxy`}}"
+      ],
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+      "scripts": [
+        "script/vagrant.sh",
+        "custom-script.sh",
+        "script/cleanup.sh"
+      ],
+      "type": "shell",
+        "expect_disconnect": "true",
+        "pause_before": "10s"
+    }
+  ],
+  "variables": {
+    "cpus": "1",
+    "disk_size": "65536",
+    "ftp_proxy": "{{env `ftp_proxy`}}",
+    "headless": "",
+    "http_proxy": "{{env `http_proxy`}}",
+    "https_proxy": "{{env `https_proxy`}}",
+    "install_vagrant_key": "true",
+    "memory": "2048",
+    "no_proxy": "{{env `no_proxy`}}",
+    "parallels_guest_os_type": "fedora-core",
+    "rsync_proxy": "{{env `rsync_proxy`}}",
+    "shutdown_command": "echo 'vagrant'|sudo -S shutdown -h now",
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant",
+    "update": "true",
+    "version": "0.1.0",
+    "virtualbox_guest_os_type": "Fedora_64",
+    "vm_name": "fedora33-ws",
+    "vmware_guest_os_type": "fedora-64"
+  }
+}
