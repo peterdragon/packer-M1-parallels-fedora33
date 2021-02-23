@@ -19,10 +19,11 @@ https://www.packer.io/docs/builders/parallels/pvm
 
 ## Manual steps
 From Mac
-* Install homebrew ````$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-* Install git ````$ brew install git
-* Install packer ````$ brew install packer
-* Install vagrant ````$ brew install vagrant
+* Install homebrew
+`$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+* Install git $ brew install git
+* Install packer $ brew install packer
+* Install vagrant $ brew install vagrant
 * Install Parallels beta for Mac M1 (download link above)
 * Create a VM manually from ISO Fedora-Workstation-Live-aarch64-33-1.2.iso to create /Users/peter/dev/box-parallels-pvm/Fedora Linux Base.pvm (download link for ISO above).
 * I followed the first steps in the boxcutter/fedora scripts manually - see below details. It's also problematic getting the parallels tools installed using the packer script, so I mounted them from the UI and installed from shell manually.
@@ -63,7 +64,9 @@ From Mac move the Parallel VM directory - not sure this step was necessary. I di
     $ mv ~/Parallels/Fedora\ Linux\ Base.pvm ~/dev/box-parallels-pvm/
 
 ### Check out packer script and build vagrant box
+
 From Mac
+
     $ cd ~/dev
     $ git clone git@github.com:peterdragon/packer-M1-parallels-fedora33.git
     $ cd packer-M1-parallels-fedora33
@@ -74,13 +77,17 @@ From Mac
     created ~/dev/box-parallels-pvm/box/parallels/fedora33-ws-0.1.0.box
 
 ### Install vagrant, add Parallels as a provider and add the fedora box
+
 From Mac
+
     $ brew install vagrant
     $ vagrant plugin install vagrant-parallels
     $ vagrant box add ~/dev/box-parallels-pvm/box/parallels/fedora33-ws-0.1.0.box --name 'fedora33-ws'
 
 ### To make a VM from the fedora box
+
 From Mac
+
     $ mkdir ~/dev/box-fedora33-ws
     $ cd ~/dev/box-fedora33-ws
     $ vagrant init
@@ -88,10 +95,9 @@ From Mac
       config.vm.provider "parallels" do |prl|
         prl.name = "fedora"
         prl.check_guest_tools = false
-      end
+      end  
     $ vagrant up  
-  
-The virtual machine boots and vagrant sets a new ssh key the first time.
+    The virtual machine boots and vagrant sets a new ssh key the first time.
     to log into the box
     $ vagrant ssh 
     to shutdown the box
