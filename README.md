@@ -2,8 +2,8 @@
 Packer script to build vagrant Fedora33 VM box using Parallels provider to run on Mac M1 ARM.
 
 ## Dependencies
-* https://www.parallels.com/directdownload/pdbeta
-* https://dl.fedoraproject.org/pub/fedora/linux/releases/33/Workstation/aarch64/iso/Fedora-Workstation-Live-aarch64-33-1.2.iso or pick another from https://arm.fedoraproject.org.
+* Parallels beta for Mac M1 ARM https://www.parallels.com/directdownload/pdbeta
+* Fedora 33 desktop for ARM architecture https://dl.fedoraproject.org/pub/fedora/linux/releases/33/Workstation/aarch64/iso/Fedora-Workstation-Live-aarch64-33-1.2.iso or pick another from https://arm.fedoraproject.org.
 * homebrew https://brew.sh/
 * git installed using homebrew https://formulae.brew.sh/formula/git#default 
 * packer installed using homebrew https://formulae.brew.sh/formula/packer#default
@@ -18,6 +18,7 @@ So instead I made a Parallels PVM with the yum upgrade done, parallels tools ins
 https://www.packer.io/docs/builders/parallels/pvm
 
 ## Manual steps
+From Mac
 * Install homebrew ````$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 * Install git ````$ brew install git
 * Install packer ````$ brew install packer
@@ -64,8 +65,6 @@ From Mac move the Parallel VM directory - not sure this step was necessary. I di
 ### Check out packer script and build vagrant box
 From Mac
     $ cd ~/dev
-    $ brew install git
-    $ brew install packer
     $ git clone git@github.com:peterdragon/packer-M1-parallels-fedora33.git
     $ cd packer-M1-parallels-fedora33
     $ packer build vagrant.json
