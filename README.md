@@ -7,7 +7,7 @@ Dependencies:
   homebrew https://brew.sh/
   git installed using homebrew https://formulae.brew.sh/formula/git#default 
   packer installed using homebrew https://formulae.brew.sh/formula/packer#default
-  vagrant https://www.vagrantup.com/
+  vagrant installed using homebrew https://formulae.brew.sh/cask/vagrant#default
 
 Packer script based on git@github.com:boxcutter/fedora.
 The normal packer will fail in Parallels when prlctl thinks the .ISO is for x86_64 rather than ARM architecture.
@@ -21,8 +21,9 @@ Manual steps:
 Install homebrew $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 Install git $ brew install git
 Install packer $ brew install packer
-Install Parallels beta for Mac M1.
-Create a VM manually from ISO Fedora-Workstation-Live-aarch64-33-1.2.iso to create /Users/peter/dev/box-parallels-pvm/Fedora Linux Base.pvm.
+Install vagrant $ brew install vagrant
+Install Parallels beta for Mac M1 (download link above)
+Create a VM manually from ISO Fedora-Workstation-Live-aarch64-33-1.2.iso to create /Users/peter/dev/box-parallels-pvm/Fedora Linux Base.pvm (download link for ISO above).
 I followed the first steps in the boxcutter/fedora scripts manually - see below details. It's also problematic getting the parallels tools installed using the packer script, so I mounted them from the UI and installed from shell manually.
 I hit an issue in Fedora 33 not allowing ssh-rsa public keys which stopped the vagrant insecure key working https://forums.centos.org/viewtopic.php?t=74233 and to fix this added a line to custom-script.sh to append ,ssh-rsa to the PubkeyAcceptedKeyTypes line in /etc/crypto-policies/back-ends/opensshserver.config inside the Fedora VM.
 
