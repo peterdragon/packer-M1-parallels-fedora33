@@ -21,15 +21,18 @@ https://www.packer.io/docs/builders/parallels/pvm
 From Mac
 * Install homebrew
 `$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-* Install git $ brew install git
-* Install packer $ brew install packer
-* Install vagrant $ brew install vagrant
+* Install git 
+`$ brew install git`
+* Install packer 
+`$ brew install packer`
+* Install vagrant 
+`$ brew install vagrant`
 * Install Parallels beta for Mac M1 (download link above)
 * Create a VM manually from ISO Fedora-Workstation-Live-aarch64-33-1.2.iso to create /Users/peter/dev/box-parallels-pvm/Fedora Linux Base.pvm (download link for ISO above).
 * I followed the first steps in the boxcutter/fedora scripts manually - see below details. It's also problematic getting the parallels tools installed using the packer script, so I mounted them from the UI and installed from shell manually.
 * I hit an issue in Fedora 33 not allowing ssh-rsa public keys which stopped the vagrant insecure key working https://forums.centos.org/viewtopic.php?t=74233 and to fix this added a line to custom-script.sh to append ,ssh-rsa to the PubkeyAcceptedKeyTypes line in /etc/crypto-policies/back-ends/opensshserver.config inside the Fedora VM.
 
-## Details
+## Details
 
 ### Create Parallels PVM
     Download ISO to ~/Downloads
@@ -59,7 +62,9 @@ From Mac
     In Parallels Control Panel right click "Remove Fedora Linux Base" but keep the files.
 
 ### Move PVM
+
 From Mac move the Parallel VM directory - not sure this step was necessary. I did this to avoid collision with Parallels saying the vagrant VM is a duplicate.
+
     $ mkdir -p ~/dev/box-parallels-pvm
     $ mv ~/Parallels/Fedora\ Linux\ Base.pvm ~/dev/box-parallels-pvm/
 
